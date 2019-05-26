@@ -3,6 +3,8 @@ include('common/utils.php');
 //print_r($_SESSION['user']);
 
 $products = getProducts($conn);
+$tiendas = getListaTiendas($conn); 
+
 ?>
 
 <!DOCTYPE html>
@@ -15,10 +17,12 @@ $products = getProducts($conn);
 
 	<h1>Bienvenido <?php echo $_SESSION['user']['username']; ?></h1>
 	<h2>Tienda: <?php echo $_SESSION['user']['store']; ?></h2>
-
+	
+	<h3>INVETARIO</h3>
 	<a href="new_product.php">Añadir producto</a>
+	
 
-	<table>
+	<table border= "1">
 		<thead>
 			<tr>
 				<th>Código</th>
@@ -41,5 +45,17 @@ $products = getProducts($conn);
 			<?php } ?>
 		</tbody>
 	</table>
+
+	<h3>OTRAS TIENDAS</h3>	
+			<?php foreach ($tiendas as $p) { ?>
+				
+					<br>
+					<a href = "store.php?store=<?php echo $p['store']?>"><?php echo $p['store'] ?></a>
+					<br>
+					
+				
+			<?php } ?>
+	<br>
+	
 </body>
 </html>

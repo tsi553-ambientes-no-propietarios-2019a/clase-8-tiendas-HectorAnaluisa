@@ -36,6 +36,78 @@ function getProducts($conn) {
 		return $products;
 }
 
+
+function getProductsID($conn,$bus) {
+	$sql = "SELECT *
+		FROM user
+		WHERE store='$bus'";
+
+		$res = $conn->query($sql);
+
+		if ($conn->error) {
+			redirect('../home.php?error_message=Ocurrió un error: ' . $conn->error);
+		}
+
+		$products = [];
+		if($res->num_rows > 0) {
+			while ($row = $res->fetch_assoc()) {
+				$products[] = $row;
+			}
+		}
+
+		return $products;
+}
+
+
+function getProductsIDRes($conn,$id) {
+	$sql = "SELECT *
+		FROM product
+		WHERE user='$id'";
+
+		$res = $conn->query($sql);
+
+		if ($conn->error) {
+			redirect('../home.php?error_message=Ocurrió un error: ' . $conn->error);
+		}
+
+		$products = [];
+		if($res->num_rows > 0) {
+			while ($row = $res->fetch_assoc()) {
+				$products[] = $row;
+			}
+		}
+
+		return $products;
+}
+
+
+
+function getListaTiendas($conn) {
+	$user_id = $_SESSION['user']['id'];
+	$sql = "SELECT *
+		FROM user
+		WHERE id <> '$user_id'";
+
+		$res = $conn->query($sql);
+
+		if ($conn->error) {
+			redirect('../home.php?error_message=Ocurrió un error: ' . $conn->error);
+		}
+
+		$products = [];
+		if($res->num_rows > 0) {
+			while ($row = $res->fetch_assoc()) {
+				$products[] = $row;
+			}
+		}
+
+		return $products;
+}
+
+
+
+
+
 $public_pages = [
 	'/tiendas/index.php', 
 	'/tiendas/php/process_login.php',
